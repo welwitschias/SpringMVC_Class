@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-group">
                   <label for="board_file">첨부 이미지</label>
-                  <img src="../image/logo.png" width="100%" />
+                  <img src="${root}image/spring-logo.svg" width="100%" />
                   <input
                     type="file"
                     name="board_file"

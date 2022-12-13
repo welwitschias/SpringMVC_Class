@@ -30,6 +30,21 @@ import com.demo.service.MenuService;
 @PropertySource("/WEB-INF/properties/db.properties")
 public class ServletAppContext implements WebMvcConfigurer {
 
+	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙여주도록 설정
+	@Override
+	public void configureViewResolvers(ViewResolverRegistry registry) {
+		WebMvcConfigurer.super.configureViewResolvers(registry);
+		registry.jsp("/WEB-INF/views/", ".jsp");
+	}
+
+	// 정적 파일의 경로를 mapping
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+		registry.addResourceHandler("/**").addResourceLocations("/resources/");
+	}
+
+	// 데이터베이스 접속 정보 관리
 	@Value("${db.classname}")
 	private String db_classname;
 
@@ -41,22 +56,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Value("${db.password}")
 	private String db_password;
-
-	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙혀주도록 설정한다.
-	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		WebMvcConfigurer.super.configureViewResolvers(registry);
-		registry.jsp("/WEB-INF/views/", ".jsp");
-	}
-
-	// 정적 파일의 경로를 매핑한다.
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		WebMvcConfigurer.super.addResourceHandlers(registry);
-		registry.addResourceHandler("/**").addResourceLocations("/resources/");
-	}
-
-	// 데이터베이스 접속 정보 관리
+	
 	@Bean
 	public BasicDataSource dataSource() {
 		BasicDataSource source = new BasicDataSource();
@@ -98,6 +98,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factoryBean;
 	}
 
+	// 인터셉터 추가
 	@Autowired
 	private MenuService menuService;
 
@@ -105,8 +106,8 @@ public class ServletAppContext implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
 		MenuInterceptor menuInterceptor = new MenuInterceptor(menuService);
-		InterceptorRegistration reg1 = registry.addInterceptor(menuInterceptor);
-		reg1.addPathPatterns("/**"); // 모든 요청
+		InterceptorRegistration reg = registry.addInterceptor(menuInterceptor);
+		reg.addPathPatterns("/**"); // 모든 요청에 적용됨
 	}
 
 }

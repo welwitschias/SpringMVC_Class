@@ -8,23 +8,23 @@ public class UserBean {
 
 	private int user_idx;
 
-	@Size(min = 2, max = 4, message = "이름은 2~4자여야 합니다.")
+	@Size(min = 2, max = 4, message = "이름은 2~4자여야 합니다")
 	@Pattern(regexp = "[가-힣]*")
 	private String user_name;
 
-	@Size(min = 4, max = 20, message = "아이디는 4~20자여야 합니다.")
+	@Size(min = 4, max = 20, message = "아이디는 4~20자여야 합니다")
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String user_id;
 
-	@Size(min = 4, max = 20, message = "비밀번호는 4~20자여야 합니다.")
+	@Size(min = 4, max = 20, message = "비밀번호는 4~20자여야 합니다")
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String user_pw;
 
-	@Size(min = 4, max = 20, message = "비밀번호는 4~20자여야 합니다.")
+	@Size(min = 4, max = 20, message = "비밀번호는 4~20자여야 합니다")
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String user_pw2;
 
-	@AssertTrue(message = "아이디 중복체크가 필요합니다.")
+	@AssertTrue(message = "아이디 중복여부를 확인해주세요")
 	private boolean userIdChecked;
 
 	public UserBean() {
