@@ -9,15 +9,16 @@ import com.demo.service.UserService;
 
 @RestController
 public class RestApiController {
-	
+
 	@Autowired
 	private UserService userService;
 
 	@GetMapping("/user/check/{user_id}")
 	public String checkUserIdExist(@PathVariable String user_id) {
-		// 유저 아이디가 없으면 true 있으면 false
-		boolean check = userService.checkuserIdExist(user_id);
-		return check + "";
+		
+		boolean check = userService.checkuserIdExist(user_id); // 유저 아이디가 없으면 true 있으면 false
+		return check + ""; // true or false 리턴
+						   // +"" 붙여줘서 boolean 타입을 String 타입(String으로 통신하므로)으로 변환
 	}
-	
+
 }

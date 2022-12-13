@@ -1,5 +1,7 @@
 package com.demo.config;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.demo.beans.LoginUserBean;
+import com.demo.interceptor.CheckLoginInterceptor;
 import com.demo.interceptor.MenuInterceptor;
 import com.demo.mapper.BoardMapper;
 import com.demo.mapper.MenuMapper;
@@ -27,6 +31,7 @@ import com.demo.service.MenuService;
 @EnableWebMvc // Controller 어노테이션이 세팅되어 있는 클래스를 Controller로 등록
 @ComponentScan("com.demo.controller") // 스캔할 패키지 지정
 @ComponentScan("com.demo.service")
+@ComponentScan("com.demo.beans")
 @PropertySource("/WEB-INF/properties/db.properties")
 public class ServletAppContext implements WebMvcConfigurer {
 
@@ -56,7 +61,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Value("${db.password}")
 	private String db_password;
-	
+
 	@Bean
 	public BasicDataSource dataSource() {
 		BasicDataSource source = new BasicDataSource();
@@ -102,12 +107,21 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Autowired
 	private MenuService menuService;
 
+	@Resource(name = "loginUserBean")
+	private LoginUserBean loginUserBean;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
-		MenuInterceptor menuInterceptor = new MenuInterceptor(menuService);
-		InterceptorRegistration reg = registry.addInterceptor(menuInterceptor);
-		reg.addPathPatterns("/**"); // 모든 요청에 적용됨
+
+		MenuInterceptor menuInterceptor = new MenuInterceptor(menuService, loginUserBean);
+		InterceptorRegistration reg1 = registry.addInterceptor(menuInterceptor);
+		reg1.addPathPatterns("/**"); // 모든 요청에 적용됨
+
+		CheckLoginInterceptor checkLoginInterceptor = new CheckLoginInterceptor(loginUserBean);
+		InterceptorRegistration reg2 = registry.addInterceptor(checkLoginInterceptor);
+		reg2.addPathPatterns("/user/modify", "/user/logout", "/board/*");
+		reg2.excludePathPatterns("/board/main");
 	}
 
 }

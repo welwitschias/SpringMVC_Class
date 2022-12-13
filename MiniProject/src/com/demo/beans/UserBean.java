@@ -9,26 +9,26 @@ public class UserBean {
 	private int user_idx;
 
 	@Size(min = 2, max = 4, message = "이름은 2~4자여야 합니다")
-	@Pattern(regexp = "[가-힣]*")
+	@Pattern(regexp = "[가-힣]*", message = "한글만 사용가능합니다")
 	private String user_name;
 
-	@Size(min = 4, max = 20, message = "아이디는 4~20자여야 합니다")
-	@Pattern(regexp = "[a-zA-Z0-9]*")
+	@Size(min = 4, max = 10, message = "아이디는 4~10자여야 합니다")
+	@Pattern(regexp = "[a-zA-Z0-9]*", message = "영문 대소문자와 숫자만 사용가능합니다")
 	private String user_id;
 
 	@Size(min = 4, max = 20, message = "비밀번호는 4~20자여야 합니다")
-	@Pattern(regexp = "[a-zA-Z0-9]*")
+	@Pattern(regexp = "[a-zA-Z0-9]*", message = "영문 대소문자와 숫자만 사용가능합니다")
 	private String user_pw;
 
 	@Size(min = 4, max = 20, message = "비밀번호는 4~20자여야 합니다")
-	@Pattern(regexp = "[a-zA-Z0-9]*")
+	@Pattern(regexp = "[a-zA-Z0-9]*", message = "영문 대소문자와 숫자만 사용가능합니다")
 	private String user_pw2;
 
 	@AssertTrue(message = "아이디 중복여부를 확인해주세요")
 	private boolean userIdChecked;
 
 	public UserBean() {
-		this.userIdChecked = false;
+		this.userIdChecked = false; // 처음 값은 id check 안됨
 	}
 
 	public boolean isUserIdChecked() {

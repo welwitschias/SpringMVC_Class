@@ -10,6 +10,6 @@
       <div class="container">
         <p>http://www.🚀busanIT.co.kr</p>
         <p>게시판 예제</p>
-        <p>사업자번호 : 000-111-222</p>
+        <p>사업자번호 : 000-11-22222</p>
       </div>
     </div>
