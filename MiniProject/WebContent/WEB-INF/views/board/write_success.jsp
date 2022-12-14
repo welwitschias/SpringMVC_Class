@@ -5,5 +5,5 @@
 
 <script>
 	alert('저장 되었습니다')
-	location.href = '${root}board/read?board_info_idx=${writeContentBean.content_board_idx}&content_idx=${writeContentBean.content_idx}&page=${page}'
+	location.href = '${root}board/main?board_info_idx=${writeContentBean.content_board_idx}&page=1'
 </script>
