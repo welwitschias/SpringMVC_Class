@@ -5,5 +5,5 @@
 
 <script>
 	alert('로그인에 실패하였습니다')
-	location.href = '${root}user/login?fail=?'
+	location.href = '${root}user/login?fail=true'
 </script>

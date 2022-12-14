@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Component("loginUserBean") // UserBean의 객체를 loginUserBean 이름으로 세션에 등록
-@SessionScope
+@SessionScope // 30분간 세션에 등록
 public class LoginUserBean {
 
 	private int user_idx;

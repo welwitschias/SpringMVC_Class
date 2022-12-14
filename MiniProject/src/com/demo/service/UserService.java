@@ -17,7 +17,6 @@ public class UserService {
 
 	public boolean checkuserIdExist(String user_id) {
 		String user_name = userMapper.checkUserIdExist(user_id);
-
 		if (user_name == null) {
 			return true; // 가입 가능
 		} else {
@@ -34,7 +33,6 @@ public class UserService {
 
 	public void getLoginUserInfo(LoginUserBean loginBean) {
 		LoginUserBean tempLoginBean = userMapper.getLoginUserInfo(loginBean);
-
 		if (tempLoginBean != null) {
 			loginUserBean.setUser_idx(tempLoginBean.getUser_idx());
 			loginUserBean.setUser_name(tempLoginBean.getUser_name());

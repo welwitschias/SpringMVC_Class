@@ -36,19 +36,16 @@ public class UserController {
 
 	@PostMapping("/login_pro")
 	public String login_pro(@Valid @ModelAttribute("loginBean") LoginUserBean loginBean, BindingResult result) {
-
 		if (result.hasErrors()) {
 			return "user/login";
 		}
-
+		// 유효성 테스트 완료 후 id와 pw로 현재 로그인 유저의 정보를 DB에서 꺼내와 세션에 있는 로그인 객체에 저장
 		userService.getLoginUserInfo(loginBean);
-
 		if (loginUserBean.isUserLogin() == true) {
 			return "user/login_success";
 		} else {
 			return "user/login_fail";
 		}
-
 	}
 
 	@GetMapping("/join")
@@ -59,18 +56,14 @@ public class UserController {
 	@PostMapping("/join_pro")
 	public String join_pro(@Valid @ModelAttribute("joinUserBean") UserBean joinUserBean, BindingResult result,
 			Model model) {
-
 		if (result.hasErrors()) {
 			return "user/join";
 		}
-
 		if (!joinUserBean.getUser_pw().equals(joinUserBean.getUser_pw2())) {
 			model.addAttribute("msg", "비밀번호가 같지 않습니다");
 			return "user/join";
 		}
-
 		userService.addUserInfo(joinUserBean);
-
 		return "user/join_success";
 	}
 
@@ -84,21 +77,16 @@ public class UserController {
 	@PostMapping("/modify_pro")
 	public String modify_pro(@Valid @ModelAttribute("modifyUserBean") UserBean modifyUserBean, BindingResult result,
 			Model model) {
-
 		if (result.hasErrors()) {
 			return "user/modify";
 		}
-
 		if (!modifyUserBean.getUser_pw().equals(modifyUserBean.getUser_pw2())) {
 			model.addAttribute("msg", "비밀번호가 같지 않습니다");
 			return "user/modify";
 		}
-
 		// 데이터베이스에 수정된 비밀번호 저장하기
 		userService.modifyUserInfo(modifyUserBean);
-
 		return "user/modify_success";
-
 	}
 
 	@GetMapping("/logout")
