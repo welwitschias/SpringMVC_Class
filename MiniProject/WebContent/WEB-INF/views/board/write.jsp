@@ -44,7 +44,7 @@
 				</div>
 				<div class="form-group">
 				  <form:label path="upload_file">첨부 이미지</form:label>
-				  <form:input type="file" path="upload_file" class="form-control" accept="image/*"/>
+				  <form:input type="file" path="upload_file" class="form-control" accept="image/*" />
 				</div>
 				<div class="form-group">
 				  <div class="text-right">

@@ -38,10 +38,10 @@ public class SpringConfigClass extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
 		super.customizeRegistration(registration);
-		// (파일 업로드 시 저장되는 경로(null이면 톰캣이 지정한 경로), 파일 1개당 최대 크기(5mb), 전체 파일 크기(50mb),
-		// 업로드 파일이 임시로 저장되지 않고, 메모리에서 바로 스트림으로 전달되는 크기의 한계)
-		MultipartConfigElement config1 = new MultipartConfigElement(null, 5242880, 52428800, 0);
-		registration.setMultipartConfig(config1);
+		// <1>파일 업로드 시 저장되는 경로(null이면 톰캣이 지정한 경로), <2>파일 1개당 최대 크기(5mb=5242880byte),
+		// <3>전체 파일 크기(50mb), <4>업로드 파일이 임시로 저장되지 않고 메모리에서 바로 스트림으로 전달되는 크기의 한계
+		MultipartConfigElement config = new MultipartConfigElement(null, 5242880, 52428800, 0);
+		registration.setMultipartConfig(config);
 	}
 
 }

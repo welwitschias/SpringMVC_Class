@@ -15,6 +15,7 @@ public interface BoardMapper {
 
 	// content_idx 값이 나오면 먼저(before) sql문을 실행, 결과를 입력한다.
 	@SelectKey(statement = "SELECT content_seq.nextval FROM dual", keyProperty = "content_idx", before = true, resultType = int.class)
+	// jdbcType=VARCHAR : 마이바티스에서 null값 가능하게 해줌
 	@Insert("INSERT INTO content_table(content_idx, content_subject, content_text, "
 			+ "content_file, content_writer_idx, content_board_idx, content_date) "
 			+ "VALUES (#{content_idx}, #{content_subject}, #{content_text}, #{content_file, jdbcType=VARCHAR}, "
@@ -24,6 +25,7 @@ public interface BoardMapper {
 	@Select("SELECT board_info_name FROM board_info_table WHERE board_info_idx = #{board_info_idx}")
 	String getBoardInfoName(int board_info_idx);
 
+	// TO_CHAR 사용 시 type을 String으로 지정해야 함(Date 안됨)
 	@Select("SELECT t1.content_idx, t1.content_subject, t2.user_name AS content_writer_name, "
 			+ "TO_CHAR(t1.content_date, 'YYYY-MM-DD') AS content_date " + "FROM content_table t1 JOIN user_table t2 "
 			+ "ON t1.content_writer_idx = t2.user_idx "

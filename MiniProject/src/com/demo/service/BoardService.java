@@ -31,7 +31,9 @@ public class BoardService {
 	private LoginUserBean loginUserBean;
 
 	private String saveUploadFile(MultipartFile upload_file) {
+		// 현재 시간을 이용해서 파일의 이름이 중복되지 않게 설정
 		String file_name = System.currentTimeMillis() + "_" + upload_file.getOriginalFilename();
+		// 파일과 관련된 오류(파일 찾지못함 등) 예외처리
 		try {
 			upload_file.transferTo(new File(path_upload + "/" + file_name));
 		} catch (Exception e) {
@@ -41,11 +43,18 @@ public class BoardService {
 	}
 
 	public void addContentInfo(ContentBean writeContentBean) {
+//		System.out.println(writeContentBean.getContent_subject());
+//		System.out.println(writeContentBean.getContent_text());
+//		System.out.println(writeContentBean.getUpload_file().getSize());
+		
 		MultipartFile upload_file = writeContentBean.getUpload_file();
 		if (upload_file.getSize() > 0) {
+			// 위의 method로 파일을 저장하고 그 이름을 가져옴
 			String file_name = saveUploadFile(upload_file);
+			// 가져온 파일의 이름을 저장함
 			writeContentBean.setContent_file(file_name);
 		}
+		// 글쓴이는 현재 로그인된 유저
 		writeContentBean.setContent_writer_idx(loginUserBean.getUser_idx());
 		boardMapper.addContentInfo(writeContentBean);
 	}

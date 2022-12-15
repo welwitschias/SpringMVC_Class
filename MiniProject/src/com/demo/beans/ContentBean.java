@@ -18,7 +18,7 @@ public class ContentBean {
 	private int content_writer_idx;
 	private int content_board_idx;
 	private String content_date;
-	private MultipartFile upload_file;
+	private MultipartFile upload_file; // 업로드한 파일을 담을 객체
 	private String content_writer_name;
 
 	public int getContent_idx() {
