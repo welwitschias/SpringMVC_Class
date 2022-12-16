@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,11 +16,13 @@ import com.demo.beans.PageBean;
 import com.demo.mapper.BoardMapper;
 
 @Service
-@PropertySource("/WEB-INF/properties/option.properties")
 public class BoardService {
 
-	@Value("${path.upload}")
-	private String path_upload;
+	/* 실시간으로 적용하기 위해 톰캣의 실제 구동주소로 설정 */
+	private String path_upload = "C:/Spring/workspace_mvc/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/MiniProject/resources/upload";
+
+	private int page_listcnt = 5;
+	private int page_paginationcnt = 10;
 
 	@Autowired
 	private BoardMapper boardMapper;
@@ -31,14 +31,16 @@ public class BoardService {
 	private LoginUserBean loginUserBean;
 
 	private String saveUploadFile(MultipartFile upload_file) {
-		// 현재 시간을 이용해서 파일의 이름이 중복되지 않게 설정
+		/* 현재 시간을 이용해서 파일의 이름이 중복되지 않게 설정 */
 		String file_name = System.currentTimeMillis() + "_" + upload_file.getOriginalFilename();
-		// 파일과 관련된 오류(파일 찾지못함 등) 예외처리
+
+		/* 파일과 관련된 오류(파일 찾지못함 등) 예외처리 */
 		try {
 			upload_file.transferTo(new File(path_upload + "/" + file_name));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return file_name;
 	}
 
@@ -46,16 +48,17 @@ public class BoardService {
 //		System.out.println(writeContentBean.getContent_subject());
 //		System.out.println(writeContentBean.getContent_text());
 //		System.out.println(writeContentBean.getUpload_file().getSize());
-		
+
 		MultipartFile upload_file = writeContentBean.getUpload_file();
 		if (upload_file.getSize() > 0) {
-			// 위의 method로 파일을 저장하고 그 이름을 가져옴
+			/* 위의 method로 파일을 저장하고 그 이름을 가져옴 */
 			String file_name = saveUploadFile(upload_file);
-			// 가져온 파일의 이름을 저장함
+			/* 가져온 파일의 이름을 저장함 */
 			writeContentBean.setContent_file(file_name);
 		}
-		// 글쓴이는 현재 로그인된 유저
+		/* 글쓴이는 현재 로그인 된 유저 */
 		writeContentBean.setContent_writer_idx(loginUserBean.getUser_idx());
+
 		boardMapper.addContentInfo(writeContentBean);
 	}
 
@@ -63,23 +66,19 @@ public class BoardService {
 		return boardMapper.getBoardInfoName(board_info_idx);
 	}
 
-	@Value("${page.listcnt}")
-	private int page_listcnt;
-
-	@Value("${page.paginationcnt}")
-	private int page_paginationcnt;
-
-	// 페이지에 해당하는 글들을 가져옴
 	public List<ContentBean> getContentList(int board_info_idx, int page) {
 		int start = (page - 1) * page_listcnt;
-		// mybatis의 RowBounds 클래스를 사용(글시작 번호, 가져올 갯수)
+		
+		/* mybatis의 RowBounds 클래스를 사용(글 시작번호, 가져올 갯수) */
 		RowBounds rowBounds = new RowBounds(start, page_listcnt);
+
 		return boardMapper.getContentList(board_info_idx, rowBounds);
 	}
 
 	public PageBean getContentCnt(int content_board_idx, int currentPage) {
 		int content_cnt = boardMapper.getContentCnt(content_board_idx);
 		PageBean pageBean = new PageBean(content_cnt, currentPage, page_listcnt, page_paginationcnt);
+
 		return pageBean;
 	}
 
@@ -87,9 +86,10 @@ public class BoardService {
 		return boardMapper.getContentInfo(content_idx);
 	}
 
-	// 글 인덱스 번호로 검색해서 글 정보를 modifyContentBean에 입력
+	/* 글 인덱스 번호로 검색해서 글 정보를 modifyContentBean에 입력 */
 	public void getContents(ContentBean modifyContentBean) {
 		ContentBean temp = boardMapper.getContentInfo(modifyContentBean.getContent_idx());
+
 		modifyContentBean.setContent_writer_name(temp.getContent_writer_name());
 		modifyContentBean.setContent_date(temp.getContent_date());
 		modifyContentBean.setContent_subject(temp.getContent_subject());
@@ -99,10 +99,13 @@ public class BoardService {
 
 	public void modifyContentInfo(ContentBean modifyContentBean) {
 		MultipartFile upload_file = modifyContentBean.getUpload_file();
+
+		/* 새롭게 이미지를 업로드 했으면, 새롭게 업로드한 이미지 이름으로 수정함 */
 		if (upload_file.getSize() > 0) {
 			String file_name = saveUploadFile(upload_file);
 			modifyContentBean.setContent_file(file_name);
 		}
+
 		boardMapper.modifyContentInfo(modifyContentBean);
 	}
 

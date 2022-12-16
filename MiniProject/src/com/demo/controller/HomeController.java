@@ -11,7 +11,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request) {
-		// 이클립스에서 톰캣의 실제 구동 주소 확인하기
+		/* 이클립스에서 톰캣의 실제 구동주소 확인하기 */
 //		System.out.println(request.getServletContext().getRealPath("/"));
 		return "redirect:/main";
 	}

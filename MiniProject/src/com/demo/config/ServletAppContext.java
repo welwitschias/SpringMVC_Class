@@ -38,21 +38,23 @@ import com.demo.service.MenuService;
 @PropertySource("/WEB-INF/properties/db.properties")
 public class ServletAppContext implements WebMvcConfigurer {
 
-	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙여주도록 설정
+	/* Controller의 method가 반환하는 jsp의 이름 앞뒤에 경로와 확장자 설정 */
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		WebMvcConfigurer.super.configureViewResolvers(registry);
+
 		registry.jsp("/WEB-INF/views/", ".jsp");
 	}
 
-	// 정적 파일의 경로를 mapping
+	/* 정적 파일의 경로를 mapping */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
+
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
 
-	// 데이터베이스 접속 정보 관리
+	/* 데이터베이스 접속 정보 관리 */
 	@Value("${db.classname}")
 	private String db_classname;
 
@@ -68,27 +70,31 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Bean
 	public BasicDataSource dataSource() {
 		BasicDataSource source = new BasicDataSource();
+
 		source.setDriverClassName(db_classname);
 		source.setUrl(db_url);
 		source.setUsername(db_username);
 		source.setPassword(db_password);
+
 		return source;
 	}
 
-	// 쿼리문과 접속 관리하는 객체
+	/* 쿼리문과 접속 관리하는 객체 */
 	@Bean
 	public SqlSessionFactory factory(BasicDataSource source) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
 		factoryBean.setDataSource(source);
+		
 		SqlSessionFactory factory = factoryBean.getObject();
 		return factory;
 	}
 
-	// 쿼리문 실행을 위한 mapper 객체
+	/* 쿼리문 실행을 위한 mapper 객체 */
 	@Bean
 	public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<BoardMapper> factoryBean = new MapperFactoryBean<BoardMapper>(BoardMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
+		
 		return factoryBean;
 	}
 
@@ -96,6 +102,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 	public MapperFactoryBean<MenuMapper> getMenuMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<MenuMapper> factoryBean = new MapperFactoryBean<MenuMapper>(MenuMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
+		
 		return factoryBean;
 	}
 
@@ -103,21 +110,23 @@ public class ServletAppContext implements WebMvcConfigurer {
 	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
+		
 		return factoryBean;
 	}
 
+	/* 이미지 업로드 */
 	@Bean
 	public StandardServletMultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
 	}
 
-	// 인터셉터 추가
+	/* 인터셉터 추가 */
 	@Autowired
 	private MenuService menuService;
 
 	@Resource(name = "loginUserBean")
 	private LoginUserBean loginUserBean;
-	
+
 	@Autowired
 	private BoardService boardService;
 
@@ -133,7 +142,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		InterceptorRegistration reg2 = registry.addInterceptor(checkLoginInterceptor);
 		reg2.addPathPatterns("/user/modify", "/user/logout", "/board/*");
 		reg2.excludePathPatterns("/board/main");
-		
+
 		CheckWriterInterceptor checkWriterInterceptor = new CheckWriterInterceptor(loginUserBean, boardService);
 		InterceptorRegistration reg3 = registry.addInterceptor(checkWriterInterceptor);
 		reg3.addPathPatterns("/board/modify", "/board/delete");

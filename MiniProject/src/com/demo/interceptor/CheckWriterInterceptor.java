@@ -22,14 +22,18 @@ public class CheckWriterInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
 		String str = request.getParameter("content_idx");
 		int content_idx = Integer.parseInt(str);
+		
 		ContentBean currentContentBean = boardService.getContentInfo(content_idx);
+		
 		if (currentContentBean.getContent_writer_idx() != loginUserBean.getUser_idx()) {
 			String contextPath = request.getContextPath();
 			response.sendRedirect(contextPath + "/board/not_writer");
-			return false;
+			return false; // 원래 요청이 거부됨
 		}
+		
 		return true;
 	}
 

@@ -17,6 +17,7 @@ public class UserService {
 
 	public boolean checkuserIdExist(String user_id) {
 		String user_name = userMapper.checkUserIdExist(user_id);
+
 		if (user_name == null) {
 			return true; // 가입 가능
 		} else {
@@ -33,6 +34,7 @@ public class UserService {
 
 	public void getLoginUserInfo(LoginUserBean loginBean) {
 		LoginUserBean tempLoginBean = userMapper.getLoginUserInfo(loginBean);
+
 		if (tempLoginBean != null) {
 			loginUserBean.setUser_idx(tempLoginBean.getUser_idx());
 			loginUserBean.setUser_name(tempLoginBean.getUser_name());
@@ -40,9 +42,10 @@ public class UserService {
 		}
 	}
 
-	// 현재 로그인 중인 유저의 인덱스 번호로 아이디와 이름을 얻어서 modifyUserBean 객체에 저장
+	/* 현재 로그인 중인 유저의 인덱스 번호로 아이디와 이름을 얻어서 modifyUserBean 객체에 저장 */
 	public void getModifyUserInfo(UserBean modifyUserBean) {
 		UserBean temp = userMapper.getModifyUserInfo(loginUserBean.getUser_idx());
+
 		modifyUserBean.setUser_id(temp.getUser_id());
 		modifyUserBean.setUser_name(temp.getUser_name());
 		modifyUserBean.setUser_idx(loginUserBean.getUser_idx());

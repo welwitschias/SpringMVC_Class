@@ -20,11 +20,13 @@ public class MainController {
 	@GetMapping("/main")
 	public String main(Model model) {
 		ArrayList<List<ContentBean>> list = new ArrayList<List<ContentBean>>();
+
 		list.add(mainService.getMainList(1)); // 1번 게시판 게시글 5개 리스트 추가
 		list.add(mainService.getMainList(2)); // 2번 게시판 게시글 5개 리스트 추가
 		list.add(mainService.getMainList(3)); // 3번 게시판 게시글 5개 리스트 추가
 		list.add(mainService.getMainList(4)); // 4번 게시판 게시글 5개 리스트 추가
 		model.addAttribute("list", list);
+
 		return "main";
 	}
 

@@ -17,6 +17,7 @@ public class MainService {
 
 	public List<ContentBean> getMainList(int board_info_idx) {
 		RowBounds rowBounds = new RowBounds(0, 5);
+		
 		return boardMapper.getContentList(board_info_idx, rowBounds);
 	}
 }
