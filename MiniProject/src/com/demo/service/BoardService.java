@@ -21,8 +21,8 @@ public class BoardService {
 	/* 실시간으로 적용하기 위해 톰캣의 실제 구동주소로 설정 */
 	private String path_upload = "C:/Spring/workspace_mvc/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/MiniProject/resources/upload";
 
-	private int page_listcnt = 5;
-	private int page_paginationcnt = 10;
+	private int page_listcnt = 10;
+	private int page_paginationcnt = 5;
 
 	@Autowired
 	private BoardMapper boardMapper;
