@@ -33,17 +33,19 @@ public class PageBean {
 		return currentPage;
 	}
 
+	/* 전체 게시글 수, 현재 페이지 번호, 페이지당 게시글의 수, 페이지 버튼의 수 */
 	public PageBean(int contentCnt, int currentPage, int contentPageCnt, int paginationCnt) {
+		/* 현재 페이지 번호 */
 		this.currentPage = currentPage;
 
-		/* 전체 페이지 갯수 */
+		/* 전체 페이지 수 */
 		pageCnt = contentCnt / contentPageCnt;
 		if (contentCnt % contentPageCnt > 0) {
 			pageCnt++;
 		}
 
-		/* 페이징 최솟값과 최댓값 */
-		min = ((currentPage - 1) / contentPageCnt) * contentPageCnt + 1;
+		/* 페이지네이션 최솟값과 최댓값 */
+		min = ((currentPage - 1) / paginationCnt) * paginationCnt + 1;
 		max = min + paginationCnt - 1;
 
 		/* 최댓값이 최대 페이지보다 크면 최대 페이지로 설정 */
