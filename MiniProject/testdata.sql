@@ -23,6 +23,6 @@ BEGIN
         );
 
     END LOOP;
-END;
 
-COMMIT;
+    COMMIT;
+END;

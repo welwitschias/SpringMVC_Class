@@ -1,10 +1,9 @@
 -- DELETE
-DROP TABLE board_info_table CASCADE CONSTRAINT;
-DROP TABLE user_table CASCADE CONSTRAINT;
-DROP TABLE content_table CASCADE CONSTRAINT;
-
-DROP SEQUENCE user_seq;
-DROP SEQUENCE content_seq;
+    drop TABLE board_info_table cascade constraint;
+    drop TABLE user_table cascade constraint;
+    drop TABLE content_table cascade constraint;
+    drop sequence user_seq;
+    drop sequence content_seq;
 
 COMMIT;
 
@@ -59,12 +58,19 @@ CREATE TABLE user_table (
     user_pw   VARCHAR2(100) NOT NULL
 );
 
+INSERT INTO user_table VALUES (
+    user_seq.NEXTVAL,
+    '테스트',
+    'test',
+    '1234'
+);
+
 CREATE TABLE content_table (
     content_idx        NUMBER
         CONSTRAINT content_pk PRIMARY KEY,
-    content_subject    VARCHAR2(500) NOT NULL,
-    content_text       LONG NOT NULL,
-    content_file       VARCHAR2(500),
+    content_subject VARCHAR2(500) NOT NULL,
+    content_text LONG NOT NULL,
+    content_file VARCHAR2(500),
     content_writer_idx NUMBER NOT NULL
         CONSTRAINT content_fk1
             REFERENCES user_table ( user_idx ),
