@@ -4,5 +4,5 @@
 
 <script>
 	/* alert('작성 완료') */
-	location.href = '${root}board/read?board_info_idx=${writeContentBean.content_board_idx}&content_idx=${writeContentBean.content_idx}&page=${page}'
+	location.href = '${root}board/read?board_info_idx=${writeContentBean.content_board_idx}&content_idx=${writeContentBean.content_idx}'
 </script>

@@ -33,7 +33,7 @@ public class PageBean {
 		return currentPage;
 	}
 
-	/* 전체 게시글 수, 현재 페이지 번호, 페이지당 게시글의 수, 페이지 버튼의 수 */
+	/* 전체 게시글 수, 현재 페이지 번호, 페이지당 게시글의 수, 하단 페이지 버튼의 수 */
 	public PageBean(int contentCnt, int currentPage, int contentPageCnt, int paginationCnt) {
 		/* 현재 페이지 번호 */
 		this.currentPage = currentPage;

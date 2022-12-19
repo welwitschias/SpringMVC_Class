@@ -29,7 +29,8 @@ public class BoardController {
 
 	@GetMapping("/main")
 	public String main(@RequestParam("board_info_idx") int board_info_idx,
-			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+					   @RequestParam(value = "page", defaultValue = "1") int page,
+					   Model model) {
 
 		model.addAttribute("board_info_idx", board_info_idx);
 
@@ -51,8 +52,10 @@ public class BoardController {
 	private LoginUserBean loginUserBean;
 
 	@GetMapping("/read")
-	public String read(@RequestParam("board_info_idx") int board_info_idx, @RequestParam("content_idx") int content_idx,
-			@RequestParam("page") int page, Model model) {
+	public String read(@RequestParam("board_info_idx") int board_info_idx,
+					   @RequestParam("content_idx") int content_idx,
+					   @RequestParam(value = "page", defaultValue = "1") int page,
+					   Model model) {
 
 		model.addAttribute("board_info_idx", board_info_idx);
 		model.addAttribute("content_idx", content_idx);
@@ -78,9 +81,7 @@ public class BoardController {
 
 	@PostMapping("/write_pro")
 	public String write_pro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean,
-			@RequestParam("page") int page, BindingResult result, Model model) {
-
-		model.addAttribute("page", page);
+			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 			return "board/write";
