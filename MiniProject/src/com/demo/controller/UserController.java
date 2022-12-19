@@ -29,7 +29,8 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String login(@ModelAttribute("loginBean") LoginUserBean loginBean,
-			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
+						@RequestParam(value = "fail", defaultValue = "false") boolean fail,
+						Model model) {
 
 		model.addAttribute("fail", fail);
 
@@ -37,7 +38,9 @@ public class UserController {
 	}
 
 	@PostMapping("/login_pro")
-	public String login_pro(@Valid @ModelAttribute("loginBean") LoginUserBean loginBean, BindingResult result) {
+	public String login_pro(@Valid
+							@ModelAttribute("loginBean") LoginUserBean loginBean,
+							BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "user/login";
@@ -59,8 +62,10 @@ public class UserController {
 	}
 
 	@PostMapping("/join_pro")
-	public String join_pro(@Valid @ModelAttribute("joinUserBean") UserBean joinUserBean, BindingResult result,
-			Model model) {
+	public String join_pro(@Valid
+						   @ModelAttribute("joinUserBean") UserBean joinUserBean,
+						   BindingResult result,
+						   Model model) {
 
 		if (result.hasErrors()) {
 			return "user/join";
@@ -85,8 +90,10 @@ public class UserController {
 	}
 
 	@PostMapping("/modify_pro")
-	public String modify_pro(@Valid @ModelAttribute("modifyUserBean") UserBean modifyUserBean, BindingResult result,
-			Model model) {
+	public String modify_pro(@Valid
+							 @ModelAttribute("modifyUserBean") UserBean modifyUserBean,
+							 BindingResult result,
+							 Model model) {
 
 		if (result.hasErrors()) {
 			return "user/modify";

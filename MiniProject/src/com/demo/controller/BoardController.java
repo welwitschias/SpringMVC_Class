@@ -72,7 +72,7 @@ public class BoardController {
 
 	@GetMapping("/write")
 	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean,
-			@RequestParam("board_info_idx") int board_info_idx) {
+						@RequestParam("board_info_idx") int board_info_idx) {
 
 		writeContentBean.setContent_board_idx(board_info_idx);
 
@@ -80,8 +80,10 @@ public class BoardController {
 	}
 
 	@PostMapping("/write_pro")
-	public String write_pro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean,
-			BindingResult result, Model model) {
+	public String write_pro(@Valid
+							@ModelAttribute("writeContentBean") ContentBean writeContentBean,
+							BindingResult result,
+							Model model) {
 
 		if (result.hasErrors()) {
 			return "board/write";
@@ -99,8 +101,10 @@ public class BoardController {
 
 	@GetMapping("/modify")
 	public String modify(@ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
-			@RequestParam("board_info_idx") int board_info_idx, @RequestParam("content_idx") int content_idx,
-			@RequestParam("page") int page, Model model) {
+						 @RequestParam("board_info_idx") int board_info_idx,
+						 @RequestParam("content_idx") int content_idx,
+						 @RequestParam("page") int page,
+						 Model model) {
 
 		modifyContentBean.setContent_board_idx(board_info_idx);
 		modifyContentBean.setContent_idx(content_idx);
@@ -114,8 +118,11 @@ public class BoardController {
 	}
 
 	@PostMapping("/modify_pro")
-	public String modify_pro(@Valid @ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
-			@RequestParam("page") int page, BindingResult result, Model model) {
+	public String modify_pro(@Valid
+							 @ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
+							 @RequestParam("page") int page,
+							 BindingResult result,
+							 Model model) {
 
 		model.addAttribute("page", page);
 
@@ -130,7 +137,8 @@ public class BoardController {
 
 	@GetMapping("/delete")
 	public String delete(@RequestParam("board_info_idx") int board_info_idx,
-			@RequestParam("content_idx") int content_idx, Model model) {
+						 @RequestParam("content_idx") int content_idx,
+						 Model model) {
 
 		boardService.deleteContentInfo(content_idx);
 		model.addAttribute("board_info_idx", board_info_idx);
