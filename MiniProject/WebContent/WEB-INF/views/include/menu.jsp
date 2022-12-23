@@ -4,7 +4,7 @@
 <!-- root 경로(context path) = "localhost:8080/MiniProject/" -->
 
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top shadow-lg">
-			<a class="navbar-brand" href="${root}">🚀busanIT</a>
+			<a class="navbar-brand" href="${root}">🚀미니 게시판 제작🚀</a>
 			
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 				<span class="navbar-toggler-icon"></span>
