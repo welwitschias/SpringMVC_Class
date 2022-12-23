@@ -3,8 +3,8 @@
 
 		<div class="container-fluid bg-dark text-white" style="margin-top: 50px; padding-top: 30px; padding-bottom: 30px">
 			<div class="container">
-				<p>http://www.🚀busanIT.co.kr</p>
-				<p>게시판 만들기</p>
-				<p>사업자번호 : 000-11-22222</p>
+				<p>2022-12-12 ~ 2022-12-19</p>
+				<p>welwitschia_@naver.com</p>
+				<p>010-4850-7027</p>
 			</div>
 		</div>
